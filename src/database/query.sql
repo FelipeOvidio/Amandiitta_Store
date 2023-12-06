@@ -1,11 +1,15 @@
 create database amandiitta_store;
-
+-- drop table usuarios;
+-- drop table clientes;
+-- drop table estoque;
+-- drop table pedidos;
+-- drop table fornecedores;
 
 create table usuarios
 (
   id serial primary key,
   nome text not null,
-  email text not null unique ,
+  email text not null,
   senha text not null
 );
 
@@ -13,24 +17,13 @@ create table clientes
 (
   id serial primary key,
   nome text not null,
-  email text null unique,
-  endereco text not null, 
-  telefone text not null unique
+  telefone text not null
 );
 
-create table produtos
+create table estoque
 (
   id serial primary key,
   descricao text not null,
   quantidade_estoque integer not null,
   valor numeric not null
 );
-
-create table estoque 
-(
-  id serial primary key,
-  descricao text not null,
-  qtd_estoque int not null,
-  valor numeric not null,
-  
-)
