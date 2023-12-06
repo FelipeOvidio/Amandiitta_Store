@@ -49,4 +49,5 @@ create table fornecedores
   email text not null,
   endereco text not null,
   telefone text not null unique
+  
 )
