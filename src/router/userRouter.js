@@ -1,17 +1,10 @@
-const express = require('express')
+const express = require('express');
+const addClient = require('../controllers/addClient');
+const dataRegisterValidation = require('../middlewares/dataRegisterValidation');
 
 const router = express();
 
-router.get('/test', (req, res) => {
-    try {
-        return res.status(200).json({ message: 'Tudo ok' })
-
-    } catch (error) {
-        return res.status(500).json({ message: 'Erro Interno no Servidor' })
-    }
-})
+router.post('/newclient', dataRegisterValidation, addClient);
 
 
-module.exports = {
-    router
-}
+module.exports = router;
