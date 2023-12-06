@@ -9,7 +9,7 @@ create table usuarios
 (
   id serial primary key,
   nome text not null,
-  email text not null unique,
+  email text not null,
   senha text not null
 );
 
@@ -17,9 +17,7 @@ create table clientes
 (
   id serial primary key,
   nome text not null,
-  email text not null,
-  endereco text not null,
-  telefone text not null unique
+  telefone text not null
 );
 
 create table estoque
@@ -49,5 +47,4 @@ create table fornecedores
   email text not null,
   endereco text not null,
   telefone text not null unique
-  
 )
