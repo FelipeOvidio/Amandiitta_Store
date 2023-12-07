@@ -22,6 +22,8 @@ const dataRegisterValidation = async (req, res, next) => {
     try {
         const emailExists = await knex('clientes').first().where({ email });
         if (emailExists) return res.status(400).json({ message: 'Email já cadastrado.' });
+        const phonoeExists = await knex('clientes').first().where({ telefone });
+        if (phonoeExists) return res.status(400).json({ message: 'Telefone já cadastrado.' });
 
         const { data } = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 
