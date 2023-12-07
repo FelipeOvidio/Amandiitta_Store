@@ -9,3 +9,5 @@ const knex = require('knex')({
         port: process.env.DB_PORT || 5432
     }
 });
+
+module.exports = knex;
