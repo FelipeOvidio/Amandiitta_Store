@@ -27,6 +27,29 @@ const addUser = async (req, res) => {
     }
 }
 
+
+const login = async (req, res) => {
+    const { email, senha } = req.body
+
+    try {
+        const user = await knex('usuarios').where({ email }).first()
+        if (!user) {
+            return res.status(404).json({ message: 'Email ou senha inválidos' })
+        }
+
+        const password = await bcrypt.compare(senha, user.senha)
+        if (!password) {
+            return res.status(400).json({ message: 'Email ou senha inválidos' })
+        }
+
+        return res.status(200).json({ message: 'Usário logado' })
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ message: 'Server internal error.' });
+    }
+}
+
 module.exports = {
-    addUser
+    addUser,
+    login
 }
