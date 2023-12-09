@@ -44,8 +44,9 @@ const getPorduct = async (req, res) => {
     try {
 
         const allProduct = await knex('produtos')
-        if (allProduct === undefined) {
-            return res.status(404).json({ message: 'Não produtos para serem exibidos' })
+
+        if (allProduct.length === 0) {
+            return res.status(404).json({ message: 'Não há produtos para serem exibidos' })
         }
         return res.status(200).json(allProduct)
 
@@ -63,7 +64,7 @@ const getPorductById = async (req, res) => {
 
         const existProduct = await knex('produtos').where({ id }).first()
         if (existProduct === undefined) {
-            return res.status(404).json({ message: 'Nenhum produto encontrado com esse id' })
+            return res.status(404).json({ message: 'Nenhum produto encontrado com esse identificador' })
         }
 
         const product = await knex('produtos').where({ id }).first()
@@ -74,8 +75,26 @@ const getPorductById = async (req, res) => {
     }
 }
 
+const deleteProductById = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const existProduct = await knex('produtos').where({ id }).first()
+        if (existProduct === undefined) {
+            return res.status(404).json({ message: 'Nenhum produto encontrado com esse identificador' })
+        }
+
+        const deleteProduct = await knex('produtos').where({ id }).del()
+        return res.status(200).json({ message: 'Produto deletado com sucesso!' })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Server internal error.' })
+    }
+}
+
 module.exports = {
     addProduct,
     getPorduct,
-    getPorductById
+    getPorductById,
+    deleteProductById
 }
