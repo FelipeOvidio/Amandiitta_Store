@@ -17,17 +17,21 @@ create table clientes
 (
   id serial primary key,
   nome text not null,
-  email text not null,
+<<<<<<< HEAD
+=======
+  email text not null unique,
   endereco text not null,
+>>>>>>> release
   telefone text not null unique
 );
 
-create table estoque
+create table produtos
 (
   id serial primary key,
   descricao text not null,
   qtd_estoque int not null,
   valor numeric not null,
+  imagem text,
   fornecedor_id int not null references fornecedores(id)
 );
 

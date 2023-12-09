@@ -1,17 +1,11 @@
-const express = require('express')
+const express = require('express');
 
-const router = express();
-
-router.get('/test', (req, res) => {
-    try {
-        return res.status(200).json({ message: 'Tudo ok' })
-
-    } catch (error) {
-        return res.status(500).json({ message: 'Erro Interno no Servidor' })
-    }
-})
+const { addUser, login } = require('../controllers/addUser');
 
 
-module.exports = {
-    router
-}
+const routerUser = express();
+
+routerUser.post('/newuser', addUser)
+routerUser.post('/login', login)
+
+module.exports = routerUser

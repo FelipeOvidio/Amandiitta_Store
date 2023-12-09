@@ -1,10 +1,15 @@
-const express = require("express");
-const { router } = require("./router/userRouter");
-require("dotenv").config();
-const app = express();
-app.use(express.json());
-app.use(router)
+require('dotenv').config();
+const express = require('express');
+const { json } = require('express')
+const router = require('./router/userRouter');
+const routerUser = require('./router/userRouter');
+const productRouter = require('./router/productRouter');
 
-app.listen(process.env.PORT, () => {
-    console.log('Star Serv');
-})
+const app = express();
+
+app.use(json());
+app.use(router)
+app.use(routerUser)
+app.use(productRouter)
+
+app.listen(process.env.PORT, () => { console.log('Star Serv') })
