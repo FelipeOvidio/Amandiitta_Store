@@ -25,12 +25,13 @@ create table clientes
   telefone text not null unique
 );
 
-create table estoque
+create table produtos
 (
   id serial primary key,
   descricao text not null,
   qtd_estoque int not null,
   valor numeric not null,
+  imagem text,
   fornecedor_id int not null references fornecedores(id)
 );
 
