@@ -1,6 +1,6 @@
 const express = require('express');
 const { addProduct, getPorduct, getPorductById, deleteProductById, updateProduct } = require('../controllers/addProduct');
-const { updateFrom } = require('../conection/conection');
+
 
 const productRouter = express()
 
