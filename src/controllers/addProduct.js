@@ -78,6 +78,7 @@ const getPorductById = async (req, res) => {
 const deleteProductById = async (req, res) => {
     const { id } = req.params
 
+
     try {
         const existProduct = await knex('produtos').where({ id }).first()
         if (existProduct === undefined) {
@@ -92,9 +93,45 @@ const deleteProductById = async (req, res) => {
     }
 }
 
+const updateProduct = async (req, res) => {
+    const { id } = req.params
+    const { descricao, qtd_estoque, valor, imagem, fornecedor_id } = req.body
+
+    try {
+        const existProduct = await knex('produtos').where({ id }).first()
+        if (existProduct === undefined) {
+            return res.status(404).json({ message: 'Nenhum produto encontrado com esse identificador' })
+        }
+
+
+        if (qtd_estoque <= 0) {
+            return res.status(400).json({ message: 'Quantdade de estoque deve ser maior que 0' })
+        }
+        if (valor <= 0) {
+            return res.status(400).json({ message: 'O valor do produto deve ser maior que 0' })
+        }
+
+        const newProduct = {
+            descricao,
+            qtd_estoque,
+            valor,
+            imagem,
+            fornecedor_id
+        }
+
+        const editProduct = await knex('produtos').where({ id }).update(newProduct)
+
+        return res.status(200).json(newProduct)
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Server internal error.' })
+    }
+}
+
 module.exports = {
     addProduct,
     getPorduct,
     getPorductById,
-    deleteProductById
+    deleteProductById,
+    updateProduct
 }
