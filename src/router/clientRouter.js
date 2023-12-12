@@ -2,11 +2,11 @@ const express = require('express');
 const addClient = require('../controllers/addClient');
 const dataRegisterValidation = require('../middlewares/dataRegisterValidation');
 
-const router = express();
+const clientRouter = express();
 
-router.get('/test')
-router.post('/newclient', dataRegisterValidation, addClient);
+clientRouter.get('/test')
+clientRouter.post('/newclient', dataRegisterValidation, addClient);
 
 
 
-module.exports = router;
+module.exports = clientRouter;

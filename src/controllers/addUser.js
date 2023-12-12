@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 
 const addUser = async (req, res) => {
     const { nome, email, senha } = req.body
+
     if (!nome && !email && !senha) {
         return res.status(400).json({ message: 'Campos nome, email e senha são obrigatórios' })
     }
@@ -23,7 +24,7 @@ const addUser = async (req, res) => {
         const { senha: _, ...dataUser } = user
         return res.status(200).json(dataUser)
     } catch (error) {
-        return res.status(500).json({ message: 'Server internal error.' });
+        return res.status(500).json({ message: 'Serer internal error.' });
     }
 }
 
