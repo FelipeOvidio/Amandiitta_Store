@@ -17,11 +17,6 @@ create table clientes
 (
   id serial primary key,
   nome text not null,
-<<<<<<< HEAD
-=======
-  email text not null unique,
-  endereco text not null,
->>>>>>> release
   telefone text not null unique
 );
 
