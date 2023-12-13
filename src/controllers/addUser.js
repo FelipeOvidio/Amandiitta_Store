@@ -43,7 +43,20 @@ const login = async (req, res) => {
     }
 }
 
+const profileUser = async (req, res) => {
+
+    try {
+        const user = await knex.select('id', 'nome', 'email').from('usuarios')
+
+        return res.status(200).json(user)
+    } catch (error) {
+
+        return res.status(500).json({ message: 'Server internal error.' });
+    }
+}
+
 module.exports = {
     addUser,
-    login
+    login,
+    profileUser
 }

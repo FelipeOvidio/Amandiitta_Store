@@ -1,11 +1,12 @@
 const express = require('express');
 const addClient = require('../controllers/addClient');
 const dataRegisterValidation = require('../middlewares/dataRegisterValidation');
-const verifyUserLoggad = require('../middlewares/authenticationToken');
+const verifyLoggedUser = require('../middlewares/authentication');
+
 
 const router = express();
 
-
+router.use(verifyLoggedUser)
 router.post('/newclient', dataRegisterValidation, addClient);
 
 

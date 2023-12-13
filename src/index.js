@@ -5,11 +5,10 @@ const router = require('./router/userRouter');
 const routerUser = require('./router/userRouter');
 const productRouter = require('./router/productRouter');
 const purchaseRoueter = require('./router/purchaseRouter');
-const verifyUserLoggad = require('./middlewares/authenticationToken');
 
 const app = express();
 
-app.use(json());
+app.use(express.json());
 app.use(routerUser)
 
 app.use(router)
