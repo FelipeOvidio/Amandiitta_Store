@@ -4,11 +4,11 @@ const dataRegisterValidation = require('../middlewares/dataRegisterValidation');
 const verifyLoggedUser = require('../middlewares/authentication');
 
 
-const router = express();
+const clientRouter = express();
+clientRouter.use(verifyLoggedUser)
+clientRouter.get('/test')
+clientRouter.post('/newclient', dataRegisterValidation, addClient);
 
-router.use(verifyLoggedUser)
-router.post('/newclient', dataRegisterValidation, addClient);
 
 
-
-module.exports = router;
+module.exports = clientRouter
