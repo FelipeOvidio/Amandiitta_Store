@@ -1,9 +1,12 @@
+
 const knex = require('../conection/conection')
+
+
 
 const addProduct = async (req, res) => {
     const { descricao, qtd_estoque, valor, imagem, fornecedor_id } = req.body
 
-    if (!descricao && qtd_estoque && valor && imagem && fornecedor_id) {
+    if (!descricao || !qtd_estoque || !valor || !imagem || !fornecedor_id) {
         return res.status(409).json({ messaage: 'Todos os campos devem ser preenchidos' })
     }
 
@@ -34,6 +37,7 @@ const addProduct = async (req, res) => {
 
 
     } catch (error) {
+        console.log(error.message);
 
         return res.status(500).json({ message: 'Server internal error.' })
     }
@@ -41,6 +45,7 @@ const addProduct = async (req, res) => {
 
 
 const getPorduct = async (req, res) => {
+
     try {
 
         const allProduct = await knex('produtos')
@@ -51,6 +56,7 @@ const getPorduct = async (req, res) => {
         return res.status(200).json(allProduct)
 
     } catch (error) {
+
         return res.status(500).json({ message: 'Server internal error.' })
     }
 }
