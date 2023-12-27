@@ -1,12 +1,15 @@
-const express = require('express');
+const { Router } = require('express');
 const addClient = require('../controllers/addClient');
 const dataRegisterValidation = require('../middlewares/dataRegisterValidation');
 const verifyLoggedUser = require('../middlewares/authentication');
 
 
-const clientRouter = express();
+const clientRouter = Router();
+
 clientRouter.use(verifyLoggedUser)
+
 clientRouter.get('/test')
+
 clientRouter.post('/newclient', dataRegisterValidation, addClient);
 
 

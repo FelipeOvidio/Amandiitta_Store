@@ -2,6 +2,11 @@ const knex = require('../conection/conection')
 const bcrypt = require('bcrypt')
 const validationLogin = async (req, res, next) => {
     const { email, senha } = req.body
+
+    if(!email.trim() && !senha.trim() ){
+        return res.status(400).json({ message: 'Email ou senha inválidos' })
+    }
+
     try {
         const user = await knex('usuarios').where({ email }).first()
         if (!user) {
