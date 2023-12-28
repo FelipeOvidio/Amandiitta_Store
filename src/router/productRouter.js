@@ -1,19 +1,21 @@
 const { Router } = require('express');
-const { addProduct, getPorduct, getPorductById, deleteProductById, updateProduct } = require('../controllers/addProduct');
+const product = require('../controllers/addProduct')
+
 const verifyLoggedUser = require('../middlewares/authentication');
 
 
 const productRouter = Router()
+
 productRouter.use(verifyLoggedUser)
 
-productRouter.post('/newproduct', addProduct)
+productRouter.post('/newproduct', product.addProduct)
 
-productRouter.get('/product', getPorduct)
+productRouter.get('/product', product.getPorduct)
 
-productRouter.get('/product/:id', getPorductById)
+productRouter.get('/product/:id', product.getPorductById)
 
-productRouter.patch('/product/:id', updateProduct)
+productRouter.patch('/product/:id', product.updateProduct)
 
-productRouter.delete('/product/:id', deleteProductById)
+productRouter.delete('/product/:id', product.deleteProductById)
 
 module.exports = productRouter

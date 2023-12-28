@@ -5,6 +5,7 @@ const productRouter = require('./productRouter');
 const purchaseRoueter = require('./purchaseRouter');
 const clientRouter = require('./clientRouter');
 
+// JOI const {} = require('../middlewares/schema/login')
 
 const routes = Router()
 

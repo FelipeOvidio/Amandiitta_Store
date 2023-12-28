@@ -1,13 +1,11 @@
-require('dotenv').config();
-const knex = require('../conection/conection')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
+const jwt = require('../utils/jwt');
+const knex2 = require('../database/db/user')
+const bcrypt2 = require('../utils/bcript')
 
-
-const addUser = async (req, res) => {
+const create = async (req, res) => {
     const { nome, email, senha } = req.body
 
-    const senhaCriptografada = await bcrypt.hash(senha, 10)
+    const senhaCriptografada = await bcrypt2.passHash(senha)
     const user = {
         nome,
         email,
@@ -15,10 +13,12 @@ const addUser = async (req, res) => {
     }
 
     try {
-        const newUser = await knex('usuarios').insert(user)
+        await knex2.userCreate(user)
 
-        const { senha: _, ...dataUser } = user
-        return res.status(200).json(dataUser)
+        delete user.senha
+
+        return res.status(200).json(user)
+
     } catch (error) {
         return res.status(500).json({ message: 'Server internal error.' });
     }
@@ -27,16 +27,30 @@ const addUser = async (req, res) => {
 
 const login = async (req, res) => {
     const { email, senha } = req.body
+    // tem que buscar o usuario no banco de dados
+    // e pegar o ID e inserir no token
+    
+    const senhaVerify = await bcrypt2.compare(senha)
+    if(!senhaVerify) return res.status(404).json({message: "usuario ou senha inválidos"})
 
+    const userEmail = await knex2.buscaEmail(email)
+    if(!userEmail) return res.status(404).json({message: "usuario ou senha inválidos"})
+    
     try {
-        const user = {
-            email,
-            senha
-        }
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SENHA, { expiresIn: '8h' })
-        const { senha: _, ...userLogged } = user
+        const { id } = userEmail
+        const token = await jwt.tokenGenerate(id)        
+       
+        const {email, nome } =  userEmail
 
-        return res.status(200).json({ usuario: userLogged, token })
+        const userLogin = {
+            usuario: {
+                nome,
+                email
+            },
+            token
+        } 
+        return res.status(200).json(userLogin)
+
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({ message: 'Server internal error.' });
@@ -46,7 +60,7 @@ const login = async (req, res) => {
 const profileUser = async (req, res) => {
 
     try {
-        const user = await knex.select('id', 'nome', 'email').from('usuarios')
+        const user = await knex2.allUsers()
 
         return res.status(200).json(user)
     } catch (error) {
@@ -56,7 +70,7 @@ const profileUser = async (req, res) => {
 }
 
 module.exports = {
-    addUser,
+    create,
     login,
     profileUser
 }
