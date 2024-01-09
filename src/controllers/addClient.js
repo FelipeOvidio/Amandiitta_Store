@@ -2,7 +2,8 @@ const knex = require('../conection/conection');
 const axios = require('axios');
 
 const addClient = async (req, res) => {
-    //const {id} = req.loggedUser;
+    const {userId} = req  // id do cliente vindo pelo jwt
+    
     const { nome, email, cep, numero_casa, telefone } = req.body;
 
     try {

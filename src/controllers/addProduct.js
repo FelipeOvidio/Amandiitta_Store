@@ -5,6 +5,8 @@ const knexProduct = require('../database/db/product')
 
 module.exports ={
     addProduct: async (req, res) => {
+        const {userId} = req  // id do cliente vindo pelo jwt
+        
         const { descricao, qtd_estoque, valor, imagem, fornecedor_id } = req.body
     
         if (!descricao || !qtd_estoque || !valor || !imagem || !fornecedor_id) {

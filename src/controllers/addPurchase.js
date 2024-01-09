@@ -1,6 +1,8 @@
 const knex = require('../conection/conection')
 
 const registerPurchase = async (req, res) => {
+    const {userId} = req  // id do cliente vindo pelo jwt
+    
     const { data, produto_qtd, produto_id, pagamento_tipo, cliente_id, pedido_status } = req.body
     try {
         if (!data && !produto_qtd && !produto_id && pagamento_tipo && !cliente_id && !pedido_status) {
